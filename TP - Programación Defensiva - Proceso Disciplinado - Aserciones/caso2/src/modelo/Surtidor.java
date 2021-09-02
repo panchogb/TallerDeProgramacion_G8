@@ -1,5 +1,7 @@
 package modelo;
 
+import excepciones.CargaInvalidaException;
+import excepciones.VacioException;
 
 public class Surtidor {
 	private float cantidad_Combustible;
@@ -13,7 +15,7 @@ public class Surtidor {
 		super();
 	}
 	
-	public void InicializarSurtidor(float carga) {
+	public void InicializarSurtidor(float carga) throws CargaInvalidaException {
 		this.cantidad_Combustible=0;
 		cargarSurtidor(carga);
 		this.acumuladoManguera1=0;
@@ -24,16 +26,24 @@ public class Surtidor {
 		this.activo2=true;
 	}
 	
-	public void cargarSurtidor(float carga) {
+	public void cargarSurtidor(float carga) throws CargaInvalidaException {
 		float cant=this.cantidad_Combustible;
-		verificar(carga);
+		if(carga <=0) {
+			throw new CargaInvalidaException("La carga debe ser mayor o igual a 1 litro");
+		}
+		if(this.cantidad_Combustible+carga>2000) {
+			throw new CargaInvalidaException("La carga excede la capacidad maxima del surtidor de 2000 litros");
+		}
 		this.cantidad_Combustible+=carga;
 		assert cantidad_Combustible==cant+carga:"Fallo postcondicion";
 	}
 	
-	public void activaManguera1() {
+	public void activaManguera1() throws VacioException {
 		this.ultimaventaManguera1=0; this.activo1=true;
-		while(this.activo1 && this.cantidad_Combustible>0) {
+		if(this.cantidad_Combustible<=0) {
+			throw new VacioException("El surtidor no tiene combustible. No se inicio la descarga.");
+		}
+		while(this.activo1) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -43,12 +53,18 @@ public class Surtidor {
 			this.acumuladoManguera1++;
 			this.cantidad_Combustible--;
 			this.ultimaventaManguera1++;
+			if(this.cantidad_Combustible<=0) {
+				desactivaManguera1();
+			}
 		}
 	}
 
-	public void activaManguera2() {
+	public void activaManguera2() throws VacioException {
 		this.ultimaventaManguera2=0; this.activo2=true;
-		while(this.activo2 && this.cantidad_Combustible>0) {
+		if(this.cantidad_Combustible<=0) {
+			throw new VacioException("El surtidor no tiene combustible. No se inicio la descarga.");
+		}
+		while(this.activo2) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -58,22 +74,26 @@ public class Surtidor {
 			this.acumuladoManguera2++;
 			this.cantidad_Combustible--;
 			this.ultimaventaManguera2++;
+			if(this.cantidad_Combustible<=0) {
+				desactivaManguera2();
+			}
 		}
 	}
 	
-	public void desactivaManguera1() {
+	public void desactivaManguera1() throws VacioException {
 		this.activo1=false;
+		if(this.cantidad_Combustible<=0) {
+			throw new VacioException("Se detuvo la descarga. El surtidor no tiene combustible");
+		}
 	}
 	
-	public void desactivaManguera2() {
+	public void desactivaManguera2() throws VacioException {
 		this.activo2=false;
+		if(this.cantidad_Combustible<=0) {
+			throw new VacioException("Se detuvo la descarga. El surtidor no tiene combustible");
+		}
 	}
 	
-	public void verificar(float carga) {
-		float cant=this.cantidad_Combustible;
-		assert carga>=1:"ERROR: carga < 1";
-		assert carga+cant>2000:"ERROR: carga total > 2000";
-	}
 	
 	public float getExistenciaDeposito() {
 		return cantidad_Combustible;
@@ -94,5 +114,6 @@ public class Surtidor {
 	public float getUltimaVentaMG2() {
 		return ultimaventaManguera2;
 	}
+	
 	
 }

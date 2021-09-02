@@ -1,6 +1,8 @@
 package modelo;
 
 import java.util.HashMap;
+
+import excepciones.AlumnoNoExisteException;
 /**
  * 
  * Clase que representa los certificados de los alumnos 

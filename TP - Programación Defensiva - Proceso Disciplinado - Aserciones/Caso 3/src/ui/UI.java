@@ -1,6 +1,6 @@
 package ui;
 
-import modelo.AlumnoNoExisteException;
+import excepciones.AlumnoNoExisteException;
 import negocio.Negocio;
 
 /**

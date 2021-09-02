@@ -1,6 +1,6 @@
 package negocio;
 
-import modelo.AlumnoNoExisteException;
+import excepciones.AlumnoNoExisteException;
 import modelo.Certificado;
 /**
  * 

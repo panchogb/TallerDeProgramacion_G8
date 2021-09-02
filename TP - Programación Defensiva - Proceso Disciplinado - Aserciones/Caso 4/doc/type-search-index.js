@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"modelo","l":"Calcular"},{"p":"excepciones","l":"DivisionPorCeroException"},{"p":"negocio","l":"Negocio"},{"p":"excepciones","l":"OperacionInvalidaException"},{"p":"prueba","l":"Prueba"},{"p":"excepciones","l":"ResultadoNegativoException"},{"p":"ui","l":"UI"}];updateSearchResults();

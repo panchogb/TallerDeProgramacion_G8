@@ -3,6 +3,11 @@ package ui;
 import modelo.AlumnoNoExisteException;
 import negocio.Negocio;
 
+/**
+ * 
+ * Clase que representa la interfaz de usuario
+ *
+ */
 public class UI {
 	private Negocio negocio =new Negocio();
 	/**

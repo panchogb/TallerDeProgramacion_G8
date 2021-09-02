@@ -1,7 +1,11 @@
 package modelo;
 
 import java.util.HashMap;
-
+/**
+ * 
+ * Clase que representa los alumnos donde es guardada su informacion basica y la de sus materias
+ *
+ */
 public class Alumno {
 	private int legajo;
 	private String nombre,apellido; 
@@ -21,8 +25,8 @@ public class Alumno {
 		materias.get(materia).setNota(nota);
 	}
 	
-	public void setCondicionMateria(String materia, String condicion) {
-		materias.get(materia).setCondicion(condicion);
+	public void setCondicionMateria(String materia, String estado) {
+		materias.get(materia).setEstado(estado);
 	}
 	
 	

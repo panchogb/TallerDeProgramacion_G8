@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"modelo","l":"Alumno"},{"p":"modelo","l":"AlumnoNoExisteException"},{"p":"modelo","l":"Certificado"},{"p":"modelo","l":"Escuela"},{"p":"modelo","l":"Materia"},{"p":"negocio","l":"Negocio"},{"p":"prueba","l":"Prueba"},{"p":"ui","l":"UI"}];updateSearchResults();

@@ -1,7 +1,11 @@
 package modelo;
 
 import java.util.HashMap;
-
+/**
+ * 
+ * Clase que representa los certificados de los alumnos 
+ *
+ */
 public class Certificado {
 	private int legajo;
 	private String nombre,apellido; 
@@ -53,7 +57,7 @@ public class Certificado {
 	 public String traerEstado(String materia) throws AlumnoNoExisteException {
 		 if(!seEncontro)
 			 throw new AlumnoNoExisteException();
-		 return this.materias.get(materia).getCondicion();
+		 return this.materias.get(materia).getEstado();
 	 }
 	 /**
 	  * PRE: la materia tiene que ser una de las cuatro (Historia, Matemática, Literatura o Fisica)
@@ -80,7 +84,7 @@ public class Certificado {
 			 throw new AlumnoNoExisteException();
 		 int cont=0;
 		 for(Materia i: materias.values()) {
-			 if(i.getCondicion()=="A cursar")
+			 if(i.getEstado()=="A cursar")
 				 cont++;
 		 }
 		if(cont>=2)

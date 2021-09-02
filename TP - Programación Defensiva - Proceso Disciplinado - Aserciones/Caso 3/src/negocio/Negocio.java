@@ -2,7 +2,11 @@ package negocio;
 
 import modelo.AlumnoNoExisteException;
 import modelo.Certificado;
-
+/**
+ * 
+ * Clase encargada de la capa negocio
+ *
+ */
 public class Negocio {
 	private Certificado certificado;
 	
@@ -36,6 +40,7 @@ public class Negocio {
 	  * @throws AlumnoNoExisteException : si no se encontro a un alumno anteriormente
 	  */
 	 public String traerEstado(String materia) throws AlumnoNoExisteException {
+		 assert materia=="Historia" || materia=="Matematica"|| materia=="Literatura"|| materia=="Fisica":"no existe esa materia"; 
 		return certificado.traerEstado(materia);
 	 }
 	 /**
@@ -46,6 +51,7 @@ public class Negocio {
 	  * @throws AlumnoNoExisteException : si no se encontro a un alumno anteriormente
 	  */
 	 public String traerNota(String materia) throws AlumnoNoExisteException {
+		 assert materia=="Historia" || materia=="Matematica"|| materia=="Literatura"|| materia=="Fisica":"no existe esa materia";  
 		 return certificado.traerNota(materia);
 	 }
 	 /**

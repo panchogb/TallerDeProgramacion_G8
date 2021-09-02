@@ -1,7 +1,11 @@
 package modelo;
 
 import java.util.HashMap;
-
+/**
+ * 
+ * clase que usa el patreon singleton que representa la escuela donde se guardan los alumnos
+ *
+ */
 public class Escuela {
 	private static Escuela instance=null;
 	private HashMap<Integer,Alumno> alumnos = new HashMap<Integer,Alumno>();

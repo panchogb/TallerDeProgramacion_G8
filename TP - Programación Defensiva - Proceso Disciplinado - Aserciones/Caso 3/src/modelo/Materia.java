@@ -1,13 +1,17 @@
 package modelo;
-
+/**
+ * 
+ * Clase que representa las distintas materia con su estado y nota
+ *
+ */
 public class Materia {
 	private String nombre;
-	private String condicion;
+	private String estado;
 	private String nota;
 	
 	public Materia(String nombre) {
 		this.nombre = nombre;
-		this.condicion = "A cursar";
+		this.estado = "A cursar";
 	}
 
 
@@ -19,12 +23,12 @@ public class Materia {
 		this.nombre = nombre;
 	}
 
-	public String getCondicion() {
-		return condicion;
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setCondicion(String condicion) {
-		this.condicion = condicion;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public String getNota() {
@@ -38,7 +42,7 @@ public class Materia {
 
 	@Override
 	public String toString() {
-		return "Materia [nombre=" + nombre + ", condicion=" + condicion + ", nota=" + nota + "]";
+		return "Materia [nombre=" + nombre + ", estado=" + estado + ", nota=" + nota + "]";
 	}
 	
 	

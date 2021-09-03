@@ -1,5 +1,10 @@
 package excepciones;
 
+/**
+ * 
+ * Esta excepcicion se utiliza por ingresos invalidos de cargas
+ *
+ */
 public class CargaInvalidaException extends Exception {
 
 	public CargaInvalidaException() {

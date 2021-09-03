@@ -3,19 +3,33 @@ package modelo;
 import excepciones.CargaInvalidaException;
 import excepciones.VacioException;
 
-public class Surtidor {
-	private float cantidad_Combustible;
-	private float acumuladoManguera1;
-	private float acumuladoManguera2;
-	private float ultimaventaManguera1;
-	private float ultimaventaManguera2;
-	private boolean activo1,activo2;
+/**
+ * 
+ * Esta clase representa el surtidor
+ *
+ */
+public class Surtidor{
+	protected float cantidad_Combustible;
+	protected float acumuladoManguera1;
+	protected float acumuladoManguera2;
+	protected float ultimaventaManguera1;
+	protected float ultimaventaManguera2;
+	protected boolean activo1,activo2;
+	private Manguera manguera1=new Manguera(1, this),manguera2=new Manguera(2, this);
 	
 	public Surtidor() {
 		super();
 	}
 	
-	public void InicializarSurtidor(float carga) throws CargaInvalidaException {
+	/**
+	 * 
+	 * @param carga
+	 * @throws CargaInvalidaException
+	 * Este metodo permite inicializar el surtidor con la carga ingresada
+	 * 
+	 */
+	
+	public void InicializarSurtidor(float carga) throws CargaInvalidaException{
 		this.cantidad_Combustible=0;
 		cargarSurtidor(carga);
 		this.acumuladoManguera1=0;
@@ -26,6 +40,15 @@ public class Surtidor {
 		this.activo2=true;
 	}
 	
+	/**
+	 * 
+	 * @param carga
+	 * @throws CargaInvalidaException
+	 * Este metodo permite cargar el surtidor con la carga ingresada
+	 * pre: la carga no puede ser negativa o nula (>=1)
+	 * pre: la cantidad de combustible del surtidor no puede exceder los 2000 litros (carga+combustible<=2000)
+	 * post:Se adhiere la carga al combustible que el surtidor tenia previamente
+	 */
 	public void cargarSurtidor(float carga) throws CargaInvalidaException {
 		float cant=this.cantidad_Combustible;
 		if(carga <=0) {
@@ -38,62 +61,45 @@ public class Surtidor {
 		assert cantidad_Combustible==cant+carga:"Fallo postcondicion";
 	}
 	
+	/**
+	 * 
+	 * @throws VacioException
+	 * Estos metodos permite activar la manguera 1/2 para descargar combustible a razon de un litro (1) por segundo
+	 * pre:El surtidor debe tener combustible(>=1)
+	 * post:Si se acaba el combustible, se detiene la descarga y se informa la cantidad acumulada y la ultima venta
+	 */
 	public void activaManguera1() throws VacioException {
-		this.ultimaventaManguera1=0; this.activo1=true;
+		manguera1.start();
 		if(this.cantidad_Combustible<=0) {
-			throw new VacioException("El surtidor no tiene combustible. No se inicio la descarga.");
-		}
-		while(this.activo1) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.acumuladoManguera1++;
-			this.cantidad_Combustible--;
-			this.ultimaventaManguera1++;
-			if(this.cantidad_Combustible<=0) {
-				desactivaManguera1();
-			}
+			throw new VacioException("Se detuvo la descarga. El surtidor no tiene combustible");
 		}
 	}
 
 	public void activaManguera2() throws VacioException {
-		this.ultimaventaManguera2=0; this.activo2=true;
-		if(this.cantidad_Combustible<=0) {
-			throw new VacioException("El surtidor no tiene combustible. No se inicio la descarga.");
-		}
-		while(this.activo2) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.acumuladoManguera2++;
-			this.cantidad_Combustible--;
-			this.ultimaventaManguera2++;
-			if(this.cantidad_Combustible<=0) {
-				desactivaManguera2();
-			}
-		}
-	}
-	
-	public void desactivaManguera1() throws VacioException {
-		this.activo1=false;
+		manguera2.start();
 		if(this.cantidad_Combustible<=0) {
 			throw new VacioException("Se detuvo la descarga. El surtidor no tiene combustible");
 		}
+	}
+	
+	/**
+	 * 
+	 * @throws VacioException
+	 * Estos metodos detiene la descarga de combustible de la manguera
+	 * post:Se detiene la descarga de combustible y se informa la cantidad acumulada de la manguera y la ultima venta
+	 */
+	public void desactivaManguera1() throws VacioException {
+		manguera1.desactivar();
 	}
 	
 	public void desactivaManguera2() throws VacioException {
-		this.activo2=false;
-		if(this.cantidad_Combustible<=0) {
-			throw new VacioException("Se detuvo la descarga. El surtidor no tiene combustible");
-		}
+		manguera2.desactivar();
 	}
 	
+	/**
+	 * Estos metodos retornan cantidad de combustible en el deposito del surtidor, las cantidad acumuladas por las mangueras 1 y 2, y las ultimas ventas de las mangueras 1 y 2, respectivamente
+	 * @return
+	 */
 	
 	public float getExistenciaDeposito() {
 		return cantidad_Combustible;
@@ -114,6 +120,7 @@ public class Surtidor {
 	public float getUltimaVentaMG2() {
 		return ultimaventaManguera2;
 	}
+	
 	
 	
 }

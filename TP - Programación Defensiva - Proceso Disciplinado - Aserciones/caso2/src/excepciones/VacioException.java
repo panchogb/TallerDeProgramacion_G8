@@ -1,5 +1,11 @@
 package excepciones;
 
+/**
+ * 
+ * Esta excepcion se utiliza cuando el deposito de combustible se encuentra vacio
+ *
+ */
+
 public class VacioException extends Exception {
 
 	public VacioException() {

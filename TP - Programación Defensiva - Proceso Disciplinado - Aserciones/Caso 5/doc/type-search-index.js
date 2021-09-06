@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"vista","l":"IVista"},{"p":"modelo","l":"Juego"},{"p":"negocio","l":"Monitor"},{"p":"excepciones","l":"NoEnteroException"},{"p":"modelo","l":"NoInicializadoException"},{"p":"excepciones","l":"NumeroInvalidoException"},{"p":"vista","l":"UI"}];updateSearchResults();

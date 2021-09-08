@@ -7,7 +7,8 @@ public class Producto {
     /**   
      * PRE: el nombre debe tener mas de 1 caracter y el precio ser mayor o igual a 0
      * POS: se agrega a la mesa el producto con su precio
-     * @param cantMesas : el numero de mesa que se va a cerrar
+     * @param nombre : nombre de producto
+     * @param precio : precio del producto
      */
 	public Producto(String nombre, float precio)
 	{

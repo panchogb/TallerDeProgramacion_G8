@@ -22,7 +22,7 @@ public class Mesa {
     /**   
      * PRE:
      * POS: la mesa cambia de estado a mesa ocupada
-     * 	 * @throws MesaIncorrectaExcepcion : cuando ya esta ocupada
+     * @exception MesaIncorrectaExcepcion : cuando ya esta ocupada
      */
 	public void ocuparMesa() throws MesaIncorrectaExcepcion
 	{
@@ -37,7 +37,7 @@ public class Mesa {
      * PRE: producto debe ser distinto a nulo
      * POS: a la mesa se le agrega el importe mas el producto
      * @param producto : referencia al producto que se va a agregar a la mesa
-     * 	 * @throws MesaIncorrectaExcepcion : cuando ya esta liberada
+     * @exception MesaIncorrectaExcepcion : cuando ya esta liberada
      */
 	public void agregarProducto(Producto producto) throws MesaIncorrectaExcepcion
 	{
@@ -53,7 +53,8 @@ public class Mesa {
     /**   
      * PRE:
      * POS: la mesa cambia de estado a mesa cerrada
-     * 	 * @throws MesaIncorrectaExcepcion : cuando ya esta liberada
+     * @return devuelve un string con toda la informacion de la mesa
+     * @exception MesaIncorrectaExcepcion : cuando ya esta liberada
      */
 	public String cerrarMesa() throws MesaIncorrectaExcepcion
 	{

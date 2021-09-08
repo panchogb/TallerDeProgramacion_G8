@@ -38,8 +38,8 @@ public class BeerHouse {
      * POS: la mesa cambia de estado a mesa ocupada
      * @param nroMesa : el numero de mesa que se va a ocupar
      * @return devuelve la mesa ocupada
-     * 	 * @throws NumeroMesaMayorExcepcion : cuando el numero de mesa sobrepasa la cantidad de mesas
-     * 	 * @throws MesaIncorrectaExcepcion : cuando la mesa no esta en el estado correcto
+     * @exception NumeroMesaMayorExcepcion : cuando el numero de mesa sobrepasa la cantidad de mesas
+     * @exception MesaIncorrectaExcepcion : cuando la mesa no esta en el estado correcto
      */
 	public Mesa ocuparMesa(int nroMesa) throws NumeroMesaMayorExcepcion, MesaIncorrectaExcepcion
 	{
@@ -51,10 +51,10 @@ public class BeerHouse {
     /**   
      * PRE: el numero de mesa debe ser mayor o igual 0
      * POS: se cierra la mesa 
-     * @param cantMesas : el numero de mesa que se va a cerrar
+     * @param nroMesa : el numero de mesa que se va a cerrar
      * @return devuelve en un string los productos y el gasto total
-     * 	 * @throws NumeroMesaMayorExcepcion : cuando el numero de mesa sobrepasa la cantidad de mesas
-     * 	 * @throws MesaIncorrectaExcepcion : cuando la mesa no esta en el estado correcto
+     * @exception NumeroMesaMayorExcepcion : cuando el numero de mesa sobrepasa la cantidad de mesas
+     * @exception MesaIncorrectaExcepcion : cuando la mesa no esta en el estado correcto
      */
 	public String cerrarMesa(int nroMesa) throws NumeroMesaMayorExcepcion, MesaIncorrectaExcepcion
 	{
@@ -65,10 +65,11 @@ public class BeerHouse {
     /**   
      * PRE: el numero de mesa debe ser mayor o igual 0
      * POS: se agrega a la mesa el producto con su precio
-     * @param cantMesas : el numero de mesa que se va a cerrar
-     * @return devuelve el gasto de la mesa
-     * 	 * @throws NumeroMesaMayorExcepcion : cuando el numero de mesa sobrepasa la cantidad de mesas
-     * 	 * @throws MesaIncorrectaExcepcion : cuando la mesa no esta en el estado correcto
+     * @param nroMesa : el numero de mesa en la que se agrega el producto
+     * @param indice : indice del producto que se va a agregar
+     * @exception NumeroMesaMayorExcepcion : cuando el numero de mesa sobrepasa la cantidad de mesas
+     * @exception MesaIncorrectaExcepcion : cuando la mesa no esta en el estado correcto
+     * @exception ProductoIncorrectoExcepcion : cuando el producto no es correcto
      */
 	public void agregarProducto(int nroMesa, int indice) throws NumeroMesaMayorExcepcion, MesaIncorrectaExcepcion, ProductoIncorrectoExcepcion
 	{

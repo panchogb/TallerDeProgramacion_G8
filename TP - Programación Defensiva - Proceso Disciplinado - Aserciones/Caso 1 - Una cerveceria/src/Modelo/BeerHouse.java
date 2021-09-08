@@ -2,9 +2,11 @@ package Modelo;
 
 import Excepciones.MesaIncorrectaExcepcion;
 import Excepciones.NumeroMesaMayorExcepcion;
+import Excepciones.ProductoIncorrectoExcepcion;
 
 public class BeerHouse {
 	private Mesa[] mesas;
+	private Producto[] productos;
 	
     /**   
      * PRE: la cantidad de mesas debe ser mayor e igual a 1
@@ -21,6 +23,14 @@ public class BeerHouse {
 		{
 			mesas[i] = new Mesa();
 		}
+		
+		productos = new Producto[] { 
+				new Producto("Hamburguesa Simple", 450), 
+				new Producto("Hamburguesa con Queso", 500),
+				new Producto("Agua", 100), 
+				new Producto("Gaseosa", 200),
+				new Producto("Cerveza", 200),
+		};
 	}
 	
     /**   
@@ -42,11 +52,11 @@ public class BeerHouse {
      * PRE: el numero de mesa debe ser mayor o igual 0
      * POS: se cierra la mesa 
      * @param cantMesas : el numero de mesa que se va a cerrar
-     * @return devuelve el gasto de la mesa
+     * @return devuelve en un string los productos y el gasto total
      * 	 * @throws NumeroMesaMayorExcepcion : cuando el numero de mesa sobrepasa la cantidad de mesas
      * 	 * @throws MesaIncorrectaExcepcion : cuando la mesa no esta en el estado correcto
      */
-	public float cerrarMesa(int nroMesa) throws NumeroMesaMayorExcepcion, MesaIncorrectaExcepcion
+	public String cerrarMesa(int nroMesa) throws NumeroMesaMayorExcepcion, MesaIncorrectaExcepcion
 	{
 		numeroDeMesaCorrecta(nroMesa);
 		
@@ -60,10 +70,19 @@ public class BeerHouse {
      * 	 * @throws NumeroMesaMayorExcepcion : cuando el numero de mesa sobrepasa la cantidad de mesas
      * 	 * @throws MesaIncorrectaExcepcion : cuando la mesa no esta en el estado correcto
      */
-	public void agregarProducto(int nroMesa, float precio) throws NumeroMesaMayorExcepcion, MesaIncorrectaExcepcion
+	public void agregarProducto(int nroMesa, int indice) throws NumeroMesaMayorExcepcion, MesaIncorrectaExcepcion, ProductoIncorrectoExcepcion
 	{
-		numeroDeMesaCorrecta(nroMesa);		
-		mesas[nroMesa].agregarProducto(precio);
+		numeroDeMesaCorrecta(nroMesa);
+		productoCorrecto(indice);
+		
+		mesas[nroMesa].agregarProducto(productos[indice]);
+	}
+	private void productoCorrecto(int indice) throws ProductoIncorrectoExcepcion
+	{
+		if (indice >= productos.length)
+		{
+			throw new ProductoIncorrectoExcepcion("Indice de producto Incorrecto");
+		}
 	}
 	private void numeroDeMesaCorrecta(int nroMesa) throws NumeroMesaMayorExcepcion
 	{
@@ -87,6 +106,22 @@ public class BeerHouse {
 		for (int i = 0; i < mesas.length; i++)
 		{
 			mensajes[i] = mesas[i].toString();
+		}
+		return mensajes;
+	}
+    /**   
+     * PRE: debe estar abierto el local
+     * POS: carga la informacion de los productos en un array de strings
+     * @return devuelve la informacion de todos los productos
+     */
+	public String[] mostrarProductos()
+	{
+		assert mesas != null : "no esta abierto el local";
+		
+		String[] mensajes = new String[productos.length];
+		for (int i = 0; i < productos.length; i++)
+		{
+			mensajes[i] = productos[i].toString();
 		}
 		return mensajes;
 	}

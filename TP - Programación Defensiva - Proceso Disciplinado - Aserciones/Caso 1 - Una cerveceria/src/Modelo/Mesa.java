@@ -1,12 +1,14 @@
 package Modelo;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import Excepciones.MesaIncorrectaExcepcion;
 
 public class Mesa {
 	private int nroMesa;
 	private char uso;
-	private int productos;
-	private float importeTotal;
+	private ArrayList<Producto> productos;
 	
 	private static int cantMesas = 0;
 	
@@ -14,8 +16,7 @@ public class Mesa {
 	{
 		nroMesa = cantMesas++;
 		uso = 'L';
-		productos = 0;
-		importeTotal = 0f;
+		productos = new ArrayList<Producto>();
 	}
 
     /**   
@@ -27,26 +28,26 @@ public class Mesa {
 	{
 		if (uso == 'O')
 		{
-			throw new MesaIncorrectaExcepcion("Mesa ocupada");
+			throw new MesaIncorrectaExcepcion("Mesa ya ocupada");
 		}
 		uso = 'O';
 	}
 	
     /**   
-     * PRE: el precio debe ser positivo
+     * PRE: producto debe ser distinto a nulo
      * POS: a la mesa se le agrega el importe mas el producto
+     * @param producto : referencia al producto que se va a agregar a la mesa
      * 	 * @throws MesaIncorrectaExcepcion : cuando ya esta liberada
      */
-	public void agregarProducto(float precio) throws MesaIncorrectaExcepcion
+	public void agregarProducto(Producto producto) throws MesaIncorrectaExcepcion
 	{
-		assert precio > 0 : "Precio incorrecto";
+		assert producto != null : "Producto nulo";
 		if (uso == 'L')
 		{
-			throw new MesaIncorrectaExcepcion("mesa disponible");
+			throw new MesaIncorrectaExcepcion("mesa vacia");
 		}
 		
-		this.importeTotal +=  precio;		
-		this.productos++;		
+		productos.add(producto);	
 	}
 
     /**   
@@ -54,14 +55,52 @@ public class Mesa {
      * POS: la mesa cambia de estado a mesa cerrada
      * 	 * @throws MesaIncorrectaExcepcion : cuando ya esta liberada
      */
-	public float cerrarMesa() throws MesaIncorrectaExcepcion
+	public String cerrarMesa() throws MesaIncorrectaExcepcion
 	{
 		if (uso == 'L')
 		{
 			throw new MesaIncorrectaExcepcion("la mesa esta libre");
 		}
 		uso = 'L';
-		return importeTotal;
+		return DevolverResumen();
+	}
+
+
+    /**   
+     * PRE: productos debe ser distinto a null
+     * POS: devuelve el los productos y el importe total de la mesa
+     */
+	private String DevolverResumen()
+	{
+		Iterator it = productos.iterator();
+		String mensaje = "Productos:\n";
+		float importe = 0;
+		while (it.hasNext())
+		{
+			Producto producto = (Producto)it.next();
+			
+			mensaje += "   " + producto.toString() + '\n';
+			
+			importe += producto.getPrecio();
+		}
+		mensaje += "------------------------\n";
+		mensaje += "Importe total = $" + importe;
+		return mensaje;
+	}
+	
+    /**   
+     * PRE: productos debe ser distinto a null
+     * POS: devuelve el importe total de la mesa
+     */
+	private float calcularImporte()
+	{
+		Iterator it = productos.iterator();
+		float importe = 0;
+		while (it.hasNext())
+		{			
+			importe += ((Producto) it.next()).getPrecio();
+		}
+		return importe;
 	}
 	
 	@Override
@@ -70,7 +109,7 @@ public class Mesa {
 		String mensaje = "NumMesa = "+ nroMesa + "| uso = " + uso;
 		if (uso == 'O')
 		{
-			mensaje += "| productos = " + productos + "| importe total = " + importeTotal;
+			mensaje += "| cant productos = " + productos.size() + "| importe total = $" + calcularImporte();
 		}
 		return mensaje;
 	}

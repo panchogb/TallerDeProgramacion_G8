@@ -34,7 +34,6 @@ public class Ventana extends JFrame implements IVista, ActionListener {
 	private JPanel panelCerrado;
 	private JPanel panelAbierto;
 	private JList list_Mesas;
-	private JTextField text_nroMesa;
 	private JButton btn_CerrarMesa;
 	private JButton btn_agregarProducto;
 	private JButton btn_OcuparMesa;
@@ -42,21 +41,7 @@ public class Ventana extends JFrame implements IVista, ActionListener {
 	private JPanel panel_1;
 
 	private Negocio negocio;
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Ventana frame = new Ventana();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
+	private JList list_productos;
 
 	/**
 	 * Create the frame.
@@ -73,7 +58,7 @@ public class Ventana extends JFrame implements IVista, ActionListener {
 		this.panelCerrado = new JPanel();		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 545, 477);
+		setBounds(100, 100, 700, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -101,12 +86,9 @@ public class Ventana extends JFrame implements IVista, ActionListener {
 		
 		this.panel_1 = new JPanel();
 		this.panelAbierto.add(this.panel_1);
+		this.panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 6, 6));
 		this.list_Mesas = new JList();
 		this.panel_1.add(this.list_Mesas);
-		
-		this.text_nroMesa = new JTextField();
-		this.panel_1.add(this.text_nroMesa);
-		this.text_nroMesa.setColumns(10);
 		
 		this.panel = new JPanel();
 		this.panel_1.add(this.panel);
@@ -127,6 +109,9 @@ public class Ventana extends JFrame implements IVista, ActionListener {
 		this.btn_CerrarMesa.addActionListener(this);
 		this.panel.add(this.btn_CerrarMesa);
 		btn_CerrarMesa.setActionCommand("cerrarMesa");
+		
+		this.list_productos = new JList();
+		this.panel_1.add(this.list_productos);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -141,53 +126,68 @@ public class Ventana extends JFrame implements IVista, ActionListener {
 	
 	private void abrirLocal()
 	{
-		int numero = Integer.parseInt(texto_nroMesas.getText());
-		if (numero > 0)
+		try
 		{
-			this.negocio.abrirLocal(numero);
+			int numero = Integer.parseInt(texto_nroMesas.getText());
+			if (numero > 0)
+			{
+				this.negocio.abrirLocal(numero);
 
-			this.panelCerrado.setVisible(false);
-			this.panelAbierto.setVisible(true);
+				this.panelCerrado.setVisible(false);
+				this.panelAbierto.setVisible(true);
+			}
+			else
+			{
+				mostrarMensajeError("Cantidad de mesas incorrectas");
+			}
 		}
-		else
+		catch (NumberFormatException e)
 		{
-			mostrarMensajeError("Numero menor a 0");
+			mostrarMensajeError("Cantidad de mesas incorrectas");
 		}
 	}
 	private void agregarProducto()
 	{
-		int numero = Integer.parseInt(text_nroMesa.getText());
+		int numero = list_Mesas.getSelectedIndex();//Integer.parseInt(text_nroMesa.getText());
 		if (numero >= 0)
 		{
-			this.negocio.agregarProducto(numero, 50f);
+			int indice = list_productos.getSelectedIndex();
+			if (indice >= 0)
+			{
+				this.negocio.agregarProducto(numero, indice);
+			}
+			else
+			{
+				mostrarMensajeError("No se ha seleccionado un producto");
+			}
 		}
 		else
 		{
-			mostrarMensajeError("Numero menor a 0");
+			mostrarMensajeError("No se ha seleccionado una mesa");
 		}
 	}
 	private void ocuparMesa()
 	{
-		int numero = Integer.parseInt(text_nroMesa.getText());
+		int numero = list_Mesas.getSelectedIndex();//Integer.parseInt(text_nroMesa.getText());
 		if (numero >= 0)
 		{
 			this.negocio.ocuparMesa(numero);
 		}
 		else
 		{
-			mostrarMensajeError("Numero menor a 0");
+			mostrarMensajeError("No se ha seleccionado una mesa");
 		}
 	}
 	private void cerrarMesa()
 	{
-		int numero = Integer.parseInt(text_nroMesa.getText());
+		int numero = list_Mesas.getSelectedIndex();//Integer.parseInt(text_nroMesa.getText());
 		if (numero >= 0)
 		{
-			mostrarImporte(this.negocio.cerrarMesa(numero));
+			mostrarDatosMesa(this.negocio.cerrarMesa(numero));
 		}
 		else
 		{
-			mostrarMensajeError("Numero menor a 0");
+			mostrarMensajeError("No se ha seleccionado una mesa");
 		}
 	}
 	
@@ -195,13 +195,17 @@ public class Ventana extends JFrame implements IVista, ActionListener {
 	{
 		this.list_Mesas.setListData(mesas);
 	}
+	public void mostrarProductos(String[] productos)
+	{
+		this.list_productos.setListData(productos);
+	}
 	public void mostrarMensajeError(String mensaje)
 	{
         JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
 	}
-	public void mostrarImporte(float importe)
+	public void mostrarDatosMesa(String mensaje)
 	{
-        JOptionPane.showMessageDialog(null, "Importe Total = " + Float.toString(importe) , "Importe", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, mensaje , "Importe", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 }

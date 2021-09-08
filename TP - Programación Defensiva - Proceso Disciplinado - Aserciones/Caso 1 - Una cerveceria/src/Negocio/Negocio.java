@@ -3,6 +3,7 @@ import Vista.IVista;
 import Vista.Ventana;
 import Excepciones.MesaIncorrectaExcepcion;
 import Excepciones.NumeroMesaMayorExcepcion;
+import Excepciones.ProductoIncorrectoExcepcion;
 import Modelo.BeerHouse;
 import Modelo.Mesa;
 
@@ -28,6 +29,7 @@ public class Negocio{
 		beerHouse.abrirLocal(cantMesas);
 		
 		vista.mostrarMesas(beerHouse.mostrarMesas());
+		vista.mostrarProductos(beerHouse.mostrarProductos());
 	}
     /**   
      * PRE: el numero de mesa debe ser mayor o igual 0
@@ -53,29 +55,29 @@ public class Negocio{
      * @param nroMesa : el numero de mesa que se va a cerrar
      * @return devuelve el importe de la mesa o 0 en caso de error
      */
-	public float cerrarMesa(int nroMesa)
+	public String cerrarMesa(int nroMesa)
 	{
-		float importe = 0;
+		String mensaje = "";
 		try {
-			importe = beerHouse.cerrarMesa(nroMesa);
+			mensaje = beerHouse.cerrarMesa(nroMesa);
 			vista.mostrarMesas(beerHouse.mostrarMesas());
 		} catch (NumeroMesaMayorExcepcion | MesaIncorrectaExcepcion e) {
 			vista.mostrarMensajeError(e.getMessage());
 		}
-		return importe;
+		return mensaje;
 	}
     /**   
-     * PRE: el numero de mesa debe ser mayor o igual 0
+     * PRE: el numero de mesa y del producto deben ser mayor o igual 0
      * POS: agrega un producto a la mesa con su importe
      * @param nroMesa : el numero de mesa que se va a agregar el producto
-     * @param precio : precio del producto
+     * @param indice : id del producto
      */
-	public void agregarProducto(int nroMesa, float precio)
+	public void agregarProducto(int nroMesa, int indice)
 	{
 		try {
-			beerHouse.agregarProducto(nroMesa, precio);
+			beerHouse.agregarProducto(nroMesa, indice);
 			vista.mostrarMesas(beerHouse.mostrarMesas());
-		} catch (NumeroMesaMayorExcepcion | MesaIncorrectaExcepcion e) {
+		} catch (NumeroMesaMayorExcepcion | MesaIncorrectaExcepcion | ProductoIncorrectoExcepcion e) {
 			vista.mostrarMensajeError(e.getMessage());
 		}
 	}

@@ -32,6 +32,7 @@ public class PruebaClinica {
 
 	public static void main(String[] args) {
 
+		
 		Habitacion.setCostoAsignacion(1000);
 		Compartida.setCostoCompartida(500);
 		Privada.setCostoPrivada(1000);

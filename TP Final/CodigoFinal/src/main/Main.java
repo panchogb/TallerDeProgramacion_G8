@@ -1,6 +1,7 @@
 package main;
 
 import java.io.IOException;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.TreeSet;
 
@@ -62,9 +63,11 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 
-		Controlador_Menu controlador_menu = new Controlador_Menu();
+
 		
+		System.out.println( Clinica.getInstance().calculoImporteAdicionales(0, new GregorianCalendar(2020, 6, 26), null));
+		Controlador_Menu controlador_menu = new Controlador_Menu();
+
 	}
 	
 }

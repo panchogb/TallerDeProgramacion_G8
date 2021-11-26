@@ -135,4 +135,7 @@ public class Factura implements Comparable, Serializable{
 	public double getImporteTotal() {
 		return importeTotal;
 	}
+	public void setImporteTotal(double value) {
+		importeTotal = value;
+	}
 }

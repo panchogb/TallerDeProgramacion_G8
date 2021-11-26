@@ -1,8 +1,7 @@
-package test;
+package testGUI;
 
 import java.awt.AWTException;
 import java.awt.Robot;
-import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JTabbedPane;
@@ -14,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controlador.Controlador;
-import excepciones.ImposibleCrearMedicoException;
 import modelo.BDdeMedicos;
 import modelo.Clinica;
 import modelo.IMedico;
@@ -26,13 +24,13 @@ import util.Mensajes;
 
 
 
-public class GuiTestConjuntoMedicosConDatos
+public class GuiTestConjuntoMedicosVacio
 {
 	Robot robot;
 	Controlador controlador;
 	FalsoOptionPane op = new FalsoOptionPane();
 
-	public GuiTestConjuntoMedicosConDatos()
+	public GuiTestConjuntoMedicosVacio()
 	{
 		try
 		{
@@ -45,19 +43,10 @@ public class GuiTestConjuntoMedicosConDatos
 	@Before
 	public void setUp()
 	{
-	
 		Clinica.getInstance().setMedicos(new BDdeMedicos());
-		IMedico medico=null, medico2 =null;
-		try {
-			medico = MedicoFactory.getMedico("25980987","Juan","Montini","MDP","2234566","Independencia","2222","Clinica","Permanente","Doctor");
-			Clinica.getInstance().getMedicos().agregarMedico(medico);
-			medico2 = MedicoFactory.getMedico("2565657","Pablo","Montini","MDP","2234567","Independencia","3333","Pediatria","Permanente","Magister");
-			Clinica.getInstance().getMedicos().agregarMedico(medico2);
-		} catch (ImposibleCrearMedicoException e) 
-		{
-		}
 		controlador = new Controlador();
 		controlador.setOptionpane(op);
+		
 	}
 
 	@After
@@ -71,7 +60,7 @@ public class GuiTestConjuntoMedicosConDatos
 	@Test
 	public void testOk() 
 	{
-
+		
 		robot.delay(TestUtils.getDelay());
 		JTextField nombre = (JTextField) TestUtils.getComponentForName(controlador.getVista(), "nombreTextField");
 		TestUtils.clickComponent(nombre,robot);
@@ -106,13 +95,8 @@ public class GuiTestConjuntoMedicosConDatos
 		JButton AgregarMedico = (JButton) TestUtils.getComponentForName(controlador.getVista(), "btnAgregarMedico");
 		TestUtils.clickComponent(AgregarMedico,robot);
 		robot.delay(200);
-		Assert.assertTrue("Deberia tener solo tres medicos",Clinica.getInstance().getMedicos().getMedicosBD().size() == 3);
-		Iterator<IMedico> it = Clinica.getInstance().getMedicos().getMedicosBD().iterator();
-		String Matricula = it.next().getMatricula();
-		while(it.hasNext() && Matricula!="1111") {
-			Matricula = it.next().getMatricula();
-		}
-		Assert.assertEquals("Debrian coincidir las matricula con la ingresada","1111",Matricula);
+		Assert.assertTrue("Deberia tener solo un medico",Clinica.getInstance().getMedicos().getMedicosBD().size() == 1);
+		Assert.assertEquals("Debrian coincidir las matricula con la ingresada","1111",Clinica.getInstance().getMedicos().getMedicosBD().iterator().next().getMatricula());
 	}
 
 	@Test
@@ -151,7 +135,7 @@ public class GuiTestConjuntoMedicosConDatos
 		JButton AgregarMedico = (JButton) TestUtils.getComponentForName(controlador.getVista(), "btnAgregarMedico");
 		TestUtils.clickComponent(AgregarMedico,robot);
 		robot.delay(200);
-		Assert.assertTrue("Deberia tener solo dos medicos",Clinica.getInstance().getMedicos().getMedicosBD().size() == 2);
+		Assert.assertTrue("Deberia estar vacio",Clinica.getInstance().getMedicos().getMedicosBD().isEmpty());
 		Assert.assertEquals("Deberia decir: "+Mensajes.ERROR_ESPECIALIDAD.getValor()+": Pediatra", Mensajes.ERROR_ESPECIALIDAD.getValor()+": Pediatra", op.getMensaje());
 	}
 
@@ -191,7 +175,7 @@ public class GuiTestConjuntoMedicosConDatos
 		JButton AgregarMedico = (JButton) TestUtils.getComponentForName(controlador.getVista(), "btnAgregarMedico");
 		TestUtils.clickComponent(AgregarMedico,robot);
 		robot.delay(200);
-		Assert.assertTrue("Deberia tener solo dos medicos",Clinica.getInstance().getMedicos().getMedicosBD().size() == 2);
+		Assert.assertTrue("Deberia estar vacio",Clinica.getInstance().getMedicos().getMedicosBD().isEmpty());
 		Assert.assertEquals("Deberia decir: "+Mensajes.ERROR_POSGRADO.getValor()+": Magisterado", Mensajes.ERROR_POSGRADO.getValor()+": Magisterado", op.getMensaje());
 	}
 
@@ -231,7 +215,7 @@ public class GuiTestConjuntoMedicosConDatos
 		JButton AgregarMedico = (JButton) TestUtils.getComponentForName(controlador.getVista(), "btnAgregarMedico");
 		TestUtils.clickComponent(AgregarMedico,robot);
 		robot.delay(200);
-		Assert.assertTrue("Deberia tener solo dos medicos",Clinica.getInstance().getMedicos().getMedicosBD().size() == 2);
+		Assert.assertTrue("Deberia estar vacio",Clinica.getInstance().getMedicos().getMedicosBD().isEmpty());
 		Assert.assertEquals("Deberia decir: "+Mensajes.ERROR_CONTRATACION.getValor()+": Residencial", Mensajes.ERROR_CONTRATACION.getValor()+": Residencial", op.getMensaje());
 	}
 

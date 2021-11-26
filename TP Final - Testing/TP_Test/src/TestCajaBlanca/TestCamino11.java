@@ -20,7 +20,7 @@ import modelo.MedicoFactory;
 import modelo.PacienteFactory;
 import personas.Paciente;
 
-public class TestCamino10 {
+public class TestCamino11 {
 
 	private Paciente paciente;
 	private ArrayList<Double> insumos;
@@ -31,13 +31,13 @@ public class TestCamino10 {
 	public void setUp()
 	{
 		try {
-			paciente = PacienteFactory.getPaciente("11751542", "pepe", "botella", "Madrid", "1254432", "Calle 1", "Mayor");
+			paciente = PacienteFactory.getPaciente("11751542", "pepe", "botella", "Madrid", "1254432", "Calle 1", "Joven");
 		} catch (NoExisteRangoEtarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		insumos = new ArrayList<Double>();
-		insumos.add(200.0);
+		//insumos.add(200.0);
 		
 		factura = new Factura(1, new GregorianCalendar(25, 11, 2021), paciente);
 		factura.setImporteTotal(1000.0);
@@ -48,7 +48,7 @@ public class TestCamino10 {
 	@Test
 	public void Test()
 	{		
-		Assert.assertEquals(760.0, Clinica.getInstance().calculoImporteAdicionales(1, new Date(2021,11,25), insumos), 1e-6);
+		Assert.assertEquals(240.0, Clinica.getInstance().calculoImporteAdicionales(1, new Date(2021,10,25), insumos), 1e-6);
 	}
 	
 }
